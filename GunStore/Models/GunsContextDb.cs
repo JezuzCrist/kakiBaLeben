@@ -4,7 +4,7 @@ namespace GunStore.Models
 {
     public class GunsContextDb : DbContext
     {
-        public GunsContextDb()
+        public GunsContextDb():base("name=DefaultConnection")
         {
 
         }
