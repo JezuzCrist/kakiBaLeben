@@ -2,9 +2,9 @@
 
 namespace GunStore.Models
 {
-    public class GunsContextDb : DbContext
+    public class ComicsContextDb : DbContext
     {
-        public GunsContextDb():base("name=DefaultConnection")
+        public ComicsContextDb():base("name=DefaultConnection")
         {
 
         }

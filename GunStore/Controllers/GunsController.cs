@@ -13,7 +13,7 @@ namespace GunStore.Controllers
 {
     public class GunsController : Controller
     {
-        private GunsContextDb db = new GunsContextDb();
+        private ComicsContextDb db = new ComicsContextDb();
 
         // GET: Guns
         public ActionResult Index()
@@ -40,7 +40,7 @@ namespace GunStore.Controllers
         // GET: Guns/Create
         public ActionResult Create()
         {
-            ViewBag.DealerId = new SelectList(db.Dealers, "Id", "FirstName");
+            ViewBag.SellerId = new SelectList(db.Dealers, "Id", "FirstName");
             return View();
         }
 
@@ -49,7 +49,7 @@ namespace GunStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DealerId,Name,Description,Price,AmmoType")] Gun gun, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Id,SellerId,Name,Description,Price,Genre")] Gun gun, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace GunStore.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.DealerId = new SelectList(db.Dealers, "Id", "FirstName", gun.DealerId);
+            ViewBag.SellerId = new SelectList(db.Dealers, "Id", "FirstName", gun.SellerId);
             return View(gun);
         }
 
@@ -83,7 +83,7 @@ namespace GunStore.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.DealerId = new SelectList(db.Dealers, "Id", "FirstName", gun.DealerId);
+            ViewBag.SellerId = new SelectList(db.Dealers, "Id", "FirstName", gun.SellerId);
             return View(gun);
         }
 
@@ -92,7 +92,7 @@ namespace GunStore.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DealerId,Name,Description,Price,AmmoType,IsPhotoExists")] Gun gun, HttpPostedFileBase file)
+        public ActionResult Edit([Bind(Include = "Id,SellerId,Name,Description,Price,Genre,IsPhotoExists")] Gun gun, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace GunStore.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.DealerId = new SelectList(db.Dealers, "Id", "FirstName", gun.DealerId);
+            ViewBag.SellerId = new SelectList(db.Dealers, "Id", "FirstName", gun.SellerId);
             return View(gun);
         }
 
@@ -157,7 +157,7 @@ namespace GunStore.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Search(string gunName, int? minPrice, int? maxPrice, string ammoType)
+        public ActionResult Search(string gunName, int? minPrice, int? maxPrice, string gener)
         {
             var gunsQuery = db.Guns.Include(x => x.Reviews);
 
@@ -182,9 +182,9 @@ namespace GunStore.Controllers
                 }
             }
 
-            if (!string.IsNullOrEmpty(ammoType))
+            if (!string.IsNullOrEmpty(gener))
             {
-                gunsQuery = gunsQuery.Where(x => x.AmmoType.Contains(ammoType));
+                gunsQuery = gunsQuery.Where(x => x.Genre.Contains(gener));
             }
 
             ViewBag.Guns = gunsQuery.ToList();

@@ -15,7 +15,7 @@ namespace GunStore.Controllers
     [Authorize]
     public class DealersController : Controller
     {
-        private GunsContextDb db = new GunsContextDb();
+        private ComicsContextDb db = new ComicsContextDb();
 
         // GET: Dealers
         public ActionResult Index()

@@ -20,7 +20,7 @@ namespace GunStore.Controllers
         public string GetAllDealersAddresses()
         {
             List<string> addresses = new List<string>();
-            using (GunsContextDb db = new GunsContextDb())
+            using (ComicsContextDb db = new ComicsContextDb())
             {
                 db.Dealers.ForEach(dealer => addresses.Add(ReformatDealerAddress(dealer)));
             }

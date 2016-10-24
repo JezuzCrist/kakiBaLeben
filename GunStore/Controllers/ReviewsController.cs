@@ -13,7 +13,7 @@ namespace GunStore.Controllers
     [Authorize]
     public class ReviewsController : Controller
     {
-        private GunsContextDb db = new GunsContextDb();
+        private ComicsContextDb db = new ComicsContextDb();
 
         // GET: Reviews
         public ActionResult Index()
